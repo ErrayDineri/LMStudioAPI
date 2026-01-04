@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     cors_origins: str = Field(default="*", alias="CORS_ORIGINS")
     default_regular_model: str = Field(default="qwen/qwen3-4b-2507", alias="DEFAULT_REGULAR_MODEL")
     default_vision_model: str = Field(default="qwen3-vl-4b-instruct", alias="DEFAULT_VISION_MODEL")
+    # Timeout for LLM requests (connect timeout, read timeout for streaming)
+    llm_timeout: float = Field(default=300.0, alias="LLM_TIMEOUT")
 
     @property
     def cors_origin_list(self) -> List[str]:

@@ -2,6 +2,7 @@ from typing import Optional, AsyncIterable
 from functools import lru_cache
 import time
 import logging
+import httpx
 from openai import AsyncOpenAI
 
 from .config import get_settings
@@ -15,10 +16,21 @@ def get_client() -> AsyncOpenAI:
     """Get configured async OpenAI client for LM Studio (cached singleton)."""
     start = time.perf_counter()
     settings = get_settings()
+    # Use httpx.Timeout for granular control:
+    # - connect: 10 seconds to establish connection
+    # - read: configurable (default 300s) for streaming responses from LLM
+    # - write: 30 seconds for sending requests
+    # - pool: 10 seconds for acquiring connection from pool
+    timeout = httpx.Timeout(
+        connect=10.0,
+        read=settings.llm_timeout,
+        write=30.0,
+        pool=10.0,
+    )
     client = AsyncOpenAI(
         base_url=settings.openai_base_url,
         api_key=settings.openai_api_key,
-        timeout=30.0,
+        timeout=timeout,
     )
     logger.info(f"[PERF] Client created in {(time.perf_counter() - start)*1000:.2f}ms")
     return client
