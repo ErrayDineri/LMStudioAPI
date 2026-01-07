@@ -1,24 +1,3 @@
-# LM Studio FastAPI Service
-
-A clean, hybrid FastAPI service for local LLMs and VLMs via LM Studio, combining the best of both worlds:
-- **LM Studio SDK** for model management (loading/unloading)
-- **OpenAI SDK** for chat operations (cleaner, standard API)
-
-## Features
-
-- 🔄 **Model Management**: Load/unload models programmatically
-- 💬 **Flexible Chat**: Generic endpoint or specialized (regular/vision)
-- 🎯 **Default Models**: Pre-configured models for common tasks
-- 🖼️ **Vision Support**: Full VLM support with base64 images
-- 🌊 **Streaming**: NDJSON streaming for real-time responses
-- 🔌 **Hybrid Architecture**: LM Studio SDK + OpenAI SDK
-
-## Requirements
-
-- **LM Studio** app running locally
-- **Python 3.10+**
-- Models downloaded in LM Studio (e.g., `qwen/qwen3-4b-2507`, `qwen3-vl-4b-instruct`)
-
 ## Setup
 
 ### 1. Install Dependencies
